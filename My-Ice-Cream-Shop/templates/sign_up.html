@@ -1,0 +1,267 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Join the Club | Scoops & Dreams{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* Registration Page Workspace Centering Layout */
+        .signup-page-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 3rem 1.5rem;
+            position: relative;
+        }
+
+        /* Pure CSS Pastel Background Blobs */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .blob-1 {
+            width: 350px;
+            height: 350px;
+            background-color: #ffeef2;
+            top: 50px;
+            right: -50px;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background-color: #ffe5b4;
+            bottom: -50px;
+            left: -100px;
+        }
+
+        /* Registration Card Container Layout */
+        .signup-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(74, 40, 16, 0.08);
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo {
+            font-size: 2.2rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-chocolate);
+        }
+
+        .brand-header p {
+            font-size: 0.9rem;
+            color: var(--soft-text);
+            margin-top: 0.25rem;
+        }
+
+        /* Django Dynamic Message Alert Box Container Setup */
+        .alert-box {
+            background-color: var(--error-red);
+            color: var(--error-text);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f5c6cb;
+            font-size: 0.85rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Field Alignment Split Grid */
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            width: 100%;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border: 2px solid #efeae4;
+            background-color: var(--input-bg);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--dark-chocolate);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 4px rgba(255, 126, 165, 0.15);
+        }
+
+        /* Terms & Agreements Checkbox Option Layout */
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            color: var(--soft-text);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 1.5rem 0 2rem 0;
+            line-height: 1.4;
+        }
+
+        .terms-checkbox input {
+            accent-color: var(--primary-pink);
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+        }
+
+        /* Premium Actions Button Submission Layer */
+        .btn-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 126, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #ff6090;
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(255, 126, 165, 0.4);
+        }
+
+        /* Card Anchor Footers */
+        .card-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--soft-text);
+        }
+
+        .card-footer a {
+            color: var(--primary-pink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="signup-page-container">
+        <!-- Soft Ambient Vector Art Blobs -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+
+        <div class="signup-card">
+            <div class="brand-header">
+                <a href="{% url 'home_page' %}" class="brand-logo">🍦</a>
+                <h2>Create Your Account</h2>
+                <p>Join Scoops Club to unlock sweet rewards and order tracking</p>
+            </div>
+
+            <!-- Django Native Validation Feedback UI Layer -->
+            {% if messages %}
+                <div class="alert-box">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Secure Form Structure -->
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <!-- Multi-field Split Grid Layout row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="John" required autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Doe" required autocomplete="family-name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Choose Username</label>
+                    <input type="text" id="username" name="username" placeholder="scoop_lover12" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="hello@example.com" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Min. 8 characters" required autocomplete="new-password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password">
+                </div>
+
+                <label class="terms-checkbox">
+                    <input type="checkbox" name="terms" required> 
+                    I agree to the Terms of Service and Privacy Policy.
+                </label>
+
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+
+            <div class="card-footer">
+                <p>Already have an account? <a href="{% url 'sign_in' %}">Sign In instead</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

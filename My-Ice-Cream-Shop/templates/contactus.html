@@ -1,0 +1,212 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Contact Us | Scoops & Dreams{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* Contact Workspace Layout */
+        .contact-page-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 4rem 1.5rem;
+            position: relative;
+        }
+
+        /* Decorative Brand Blobs */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .blob-c1 {
+            width: 320px;
+            height: 320px;
+            background-color: #ffeef2;
+            top: 10%;
+            left: -50px;
+        }
+
+        .blob-c2 {
+            width: 380px;
+            height: 380px;
+            background-color: #a8e6cf;
+            bottom: 5%;
+            right: -50px;
+        }
+
+        /* Glassmorphism Card Frame */
+        .contact-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 3.5rem 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(74, 40, 16, 0.06);
+            width: 100%;
+            max-width: 550px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .contact-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark-chocolate);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-header p {
+            font-size: 0.95rem;
+            color: var(--soft-text);
+        }
+
+        /* Form Layout Architecture */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border: 2px solid #efeae4;
+            background-color: #fff;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--dark-chocolate);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 4px rgba(255, 126, 165, 0.15);
+        }
+
+        /* Success Alert Box Style - Smooth fade transition enabled */
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 0.85rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #c8e6c9;
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Action Button Submission Rule */
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 126, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #ff6090;
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(255, 126, 165, 0.4);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="contact-page-container">
+        <!-- Theme Vector Art Blobs -->
+        <div class="bg-blob blob-c1"></div>
+        <div class="bg-blob blob-c2"></div>
+
+        <div class="contact-card">
+            <div class="contact-header">
+                <h2>Get in Touch ✉️</h2>
+                <p>Have questions, feedback, or a catering request? Drop us a line!</p>
+            </div>
+
+            <!-- Identifiable Wrapper to overwrite any trailing alerts instantly -->
+            <div id="alert-wrapper">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div id="success-alert-toast" class="alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Secure Form Interface Structure -->
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Catering, feedback, bulk order, etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Type your sweet note here..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Overwrites and deletes any existing alerts right as the button is clicked
+            const contactForm = document.querySelector("form");
+            if (contactForm) {
+                contactForm.addEventListener("submit", function() {
+                    const activeToast = document.getElementById("success-alert-toast");
+                    if (activeToast) {
+                        activeToast.remove();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

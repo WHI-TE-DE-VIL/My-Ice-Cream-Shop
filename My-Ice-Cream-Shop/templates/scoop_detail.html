@@ -1,0 +1,174 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Build Your Scoop | Scoops & Dreams{% endblock %}
+
+{% block content %}
+    <style>
+        .page-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 8%;
+        }
+
+        .builder-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1100px;
+            width: 100%;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(74, 40, 16, 0.05);
+        }
+
+        .preview-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #ffeef2 0%, #fff 70%);
+            border-radius: 20px;
+            padding: 2rem;
+            min-height: 450px;
+        }
+
+        .cone-graphic {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .preview-scoop {
+            width: 140px;
+            height: 120px;
+            border-radius: 50% 50% 45% 45%;
+            margin-bottom: -60px;
+            box-shadow: inset -12px -12px 0 rgba(0,0,0,0.05);
+            transition: background-color 0.3s ease;
+            background-color: var(--primary-pink);
+            z-index: 1;
+        }
+
+        .preview-cone {
+            width: 0;
+            height: 0;
+            border-left: 55px solid transparent;
+            border-right: 55px solid transparent;
+            border-top: 140px solid #deaa6b;
+            margin-top: 40px;
+            z-index: 0;
+        }
+
+        .options-side { display: flex; flex-direction: column; justify-content: center; text-align: left; }
+        .options-side h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .price-tag { font-size: 1.8rem; font-weight: 800; color: var(--primary-pink); margin-bottom: 2rem; }
+        .section-title { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1rem; color: var(--soft-text); }
+        .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 2rem; }
+        .option-card { border: 2px solid #efeae4; border-radius: 14px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s ease; font-weight: 600; font-size: 0.85rem; }
+        .option-card.selected { border-color: var(--primary-pink); background-color: #ffeef2; color: var(--primary-pink); }
+        .quantity-control { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .qty-btn { width: 40px; height: 40px; border: 2px solid var(--dark-chocolate); background: transparent; border-radius: 50%; font-size: 1.2rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .qty-btn:hover { background-color: var(--dark-chocolate); color: white; }
+        .qty-number { font-size: 1.2rem; font-weight: 700; }
+
+        .btn-order {
+            background-color: var(--dark-chocolate);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-order:hover { background-color: #351c0b; transform: translateY(-2px); }
+        @media (max-width: 900px) { .builder-container { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; } .page-wrapper { padding: 1.5rem; } }
+    </style>
+
+    <div class="page-wrapper">
+        <div class="builder-container">
+            <div class="preview-side">
+                <div class="cone-graphic">
+                    <div class="preview-scoop" id="scoopVisual"></div>
+                    <div class="preview-cone"></div>
+                </div>
+            </div>
+
+            <div class="options-side">
+                <h1>Customise Your Scoop</h1>
+                <div class="price-tag" id="totalPrice">₹120</div>
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="section-title">1. Select Base Container</div>
+                    <div class="options-grid">
+                        <div class="option-card selected" onclick="selectBase('waffle', 40)">Waffle Cone</div>
+                        <div class="option-card" onclick="selectBase('waffle-dipped', 60)">Dipped Cone</div>
+                        <div class="option-card" onclick="selectBase('cup', 30)">Classic Cup</div>
+                    </div>
+
+                    <div class="section-title">2. Choose Your Primary Flavour</div>
+                    <div class="options-grid">
+                        <div class="option-card selected" onclick="changeFlavor('#ff7ea5', 80)">Strawberry</div>
+                        <div class="option-card" onclick="changeFlavor('#a8e6cf', 80)">Mint Choco</div>
+                        <div class="option-card" onclick="changeFlavor('#4a2810', 80)">Dark Cocoa</div>
+                    </div>
+
+                    <div class="section-title">3. Number of Scoops</div>
+                    <div class="quantity-control">
+                        <button type="button" class="qty-btn" onclick="updateQty(-1)">-</button>
+                        <span class="qty-number" id="qtyDisplay">1</span>
+                        <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                    </div>
+
+                    <button type="submit" class="btn-order">Add to My Tray</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let basePrice = 40;
+        let flavorPrice = 80;
+        let scoopQuantity = 1;
+
+        function changeFlavor(color, price) {
+            document.getElementById('scoopVisual').style.backgroundColor = color;
+            flavorPrice = price;
+            calculateTotal();
+            let eventTarget = event.currentTarget;
+            let siblings = eventTarget.parentNode.children;
+            for(let card of siblings) card.classList.remove('selected');
+            eventTarget.classList.add('selected');
+        }
+
+        function selectBase(type, price) {
+            basePrice = price;
+            calculateTotal();
+            let eventTarget = event.currentTarget;
+            let siblings = eventTarget.parentNode.children;
+            for(let card of siblings) card.classList.remove('selected');
+            eventTarget.classList.add('selected');
+        }
+
+        function updateQty(amount) {
+            scoopQuantity += amount;
+            if (scoopQuantity < 1) scoopQuantity = 1;
+            if (scoopQuantity > 3) scoopQuantity = 3;
+            document.getElementById('qtyDisplay').innerText = scoopQuantity;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let total = basePrice + (flavorPrice * scoopQuantity);
+            document.getElementById('totalPrice').innerText = '₹' + total;
+        }
+    </script>
+{% endblock %}

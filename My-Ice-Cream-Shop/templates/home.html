@@ -1,0 +1,219 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Welcome to Scoops & Dreams{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Premium Success Alert Styles */
+    .home-alert-container {
+        max-width: 1200px;
+        margin: 1.5rem auto 0 auto;
+        padding: 0 8%;
+        width: 100%;
+    }
+
+    .alert-success {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        padding: 1rem 1.5rem;
+        border-radius: 14px;
+        border: 1px solid #c8e6c9;
+        font-size: 0.95rem;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.05);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 1;
+        transform: translateY(0);
+        /* Handles the smooth vanishing animation */
+        transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        padding: 0 8%;
+        position: relative;
+        background: radial-gradient(circle at 80% 20%, #ffeef2 0%, var(--cream-white) 60%);
+    }
+
+    .hero-content {
+        max-width: 600px;
+        z-index: 10;
+        text-align: left;
+    }
+
+    .hero-tagline {
+        background-color: #ffeef2;
+        color: var(--primary-pink);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 3.8rem;
+        line-height: 1.15;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        color: var(--dark-chocolate);
+    }
+
+    .hero h1 span {
+        color: var(--primary-pink);
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        color: var(--soft-text);
+        line-height: 1.7;
+        margin-bottom: 2.5rem;
+    }
+
+    .cta-group {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .btn-primary {
+        text-decoration: none;
+        background-color: var(--dark-chocolate);
+        color: white;
+        padding: 1rem 2.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #351c0b;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        text-decoration: none;
+        border: 2px solid var(--dark-chocolate);
+        color: var(--dark-chocolate);
+        padding: 1rem 2.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--dark-chocolate);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .hero-graphic {
+        position: absolute;
+        right: 12%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 350px;
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .scoop {
+        width: 180px;
+        height: 150px;
+        border-radius: 50% 50% 45% 45%;
+        margin-bottom: -70px;
+        position: relative;
+        box-shadow: inset -15px -15px 0 rgba(0,0,0,0.06);
+    }
+
+    .scoop.mint { background-color: var(--mint-green); z-index: 3; width: 150px; height: 130px; }
+    .scoop.pink { background-color: var(--primary-pink); z-index: 2; width: 170px; height: 140px; }
+    .scoop.choco { background-color: var(--dark-chocolate); z-index: 1; }
+
+    .cone {
+        width: 0;
+        height: 0;
+        border-left: 70px solid transparent;
+        border-right: 70px solid transparent;
+        border-top: 180px solid #deaa6b;
+        margin-top: 50px;
+        filter: drop-shadow(0 10px 15px rgba(74,40,16,0.15));
+        position: relative;
+        z-index: 0;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(-50%) translateY(0px); }
+        50% { transform: translateY(-50%) translateY(-20px); }
+        100% { transform: translateY(-50%) translateY(0px); }
+    }
+
+    @media (max-width: 992px) {
+        .hero-graphic { display: none; }
+        .hero { padding: 0 5%; text-align: center; }
+        .hero-content { max-width: 100%; }
+        .cta-group { justify-content: center; }
+        .home-alert-container { padding: 0 5%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <!-- Dynamic Django Message Template Block Layer -->
+    {% if messages %}
+        <div class="home-alert-container">
+            {% for message in messages %}
+                <div id="success-alert-toast" class="alert-success">
+                    ✅ {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tagline">New Flavours Arrived ✨</span>
+            <h1>Life is better with <span>Ice Cream</span></h1>
+            <p>Indulge in our handcrafted, organic ice cream prepared daily with love and fresh, premium ingredients. Explore over 40 distinct artisan flavors made to brighten your day.</p>
+            <div class="cta-group">
+                <a href="{% url 'menu' %}" class="btn-primary">Explore Menu</a>
+                <a href="{% url 'find_store' %}" class="btn-secondary">Find a Store</a>
+            </div>
+        </div>
+        <div class="hero-graphic">
+            <div class="scoop mint"></div>
+            <div class="scoop pink"></div>
+            <div class="scoop choco"></div>
+            <div class="cone"></div>
+        </div>
+    </section>
+
+    <!-- Precise Time Management Scripts Execution Block -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const homeAlert = document.getElementById("success-alert-toast");
+
+            if (homeAlert) {
+                // Waits exactly 5000 milliseconds (5 seconds) before fading out
+                setTimeout(function() {
+                    homeAlert.style.opacity = "0";
+                    homeAlert.style.transform = "translateY(-15px)";
+
+                    // Removes the item completely from the DOM flow after transition finishes
+                    setTimeout(function() {
+                        homeAlert.remove();
+                    }, 600);
+                }, 5000);
+            }
+        });
+    </script>
+{% endblock %}

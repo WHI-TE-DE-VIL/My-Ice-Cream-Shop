@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic title tag placeholder block -->
+    <title>{% block title %}Scoops & Dreams | Premium Ice Cream{% endblock %}</title>
+    <style>
+        /* Modern Design System Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-pink: #ff7ea5;
+            --cream-white: #fffcf7;
+            --dark-chocolate: #4a2810;
+            --mint-green: #a8e6cf;
+            --soft-text: #6b584c;
+        }
+
+        body {
+            background-color: var(--cream-white);
+            color: var(--dark-chocolate);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 1. Sticky Navigation Bar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background-color: rgba(255, 252, 247, 0.95);
+            box-shadow: 0 4px 20px rgba(74, 40, 16, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-pink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-chocolate);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.2rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-pink);
+        }
+
+        /* ✨ Dynamic Active Styling Rule Block */
+        .nav-links a.active {
+            color: var(--primary-pink);
+            font-weight: 700;
+        }
+
+        /* Underline accent indicator for active selection */
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-pink);
+            border-radius: 50px;
+        }
+
+        /* Auth CTA & Profile Layout Wrapper */
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-signin {
+            text-decoration: none;
+            color: var(--dark-chocolate);
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .btn-signin:hover {
+            color: var(--primary-pink);
+        }
+
+        .btn-signup {
+            text-decoration: none;
+            background-color: var(--primary-pink);
+            color: white;
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 126, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-signup:hover {
+            background-color: #ff6090;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 126, 165, 0.4);
+        }
+
+        /* Profile Button Style */
+        .btn-profile {
+            text-decoration: none;
+            color: var(--dark-chocolate);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            border: 1.5px solid #efeae4;
+            transition: all 0.3s ease;
+        }
+
+        .btn-profile:hover, .btn-profile.active {
+            color: var(--primary-pink);
+            border-color: var(--primary-pink);
+            background-color: #fff5f7;
+        }
+
+        /* Responsive Navbar adjustments layout rule */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1.2rem 5%;
+            }
+            .nav-links {
+                gap: 1.2rem;
+            }
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+            .nav-actions {
+                gap: 0.8rem;
+            }
+        }
+    </style>
+    <!-- Placeholder block allowing child views to append layout CSS code -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Shared Unified Premium Navbar Component -->
+    <nav class="navbar">
+        <a href="{% url 'scoop_detail' %}" class="logo">🍦 Scoops</a>
+
+        <ul class="nav-links">
+            <!-- Appending 'active' style layout configurations to list items based on paths lookup -->
+            <li><a href="{% url 'home_page' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+            <li><a href="{% url 'flavours' %}" class="{% if '/flavours/' in request.path %}active{% endif %}">Flavours</a></li>
+            <li><a href="{% url 'menu' %}" class="{% if '/menu/' in request.path %}active{% endif %}">Menu</a></li>
+            <li><a href="{% url 'our_story' %}" class="{% if '/ourstory/' in request.path %}active{% endif %}">Our Story</a></li>
+            <li><a href="{% url 'locations' %}" class="{% if '/locations/' in request.path %}active{% endif %}">Locations</a></li>
+            <li><a href="{% url 'contact_us' %}" class="{% if '/contact_us/' in request.path or '/contactus/' in request.path %}active{% endif %}">Contact Us</a></li>
+        </ul>
+
+        <!-- Consolidated action items wrapper with embedded dynamic logic mapping -->
+        <div class="nav-actions">
+            {% if user.is_authenticated %}
+                <!-- Shown exclusively to signed-in users -->
+                <a href="{% url 'profile' %}" class="btn-profile {% if '/profile/' in request.path %}active{% endif %}">
+                    👤 My Profile
+                </a>
+            {% else %}
+                <!-- Shown exclusively to logged-out/anonymous users -->
+                <div class="auth-buttons">
+                    <a href="{% url 'sign_in' %}" class="btn-signin">Sign In</a>
+                    <a href="{% url 'sign_up' %}" class="btn-signup">Sign Up</a>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Workspace body page injector block -->
+    {% block content %}{% endblock %}
+
+</body>
+</html>

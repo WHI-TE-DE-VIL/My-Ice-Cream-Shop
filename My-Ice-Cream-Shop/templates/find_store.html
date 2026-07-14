@@ -1,0 +1,75 @@
+    <!-- Main Active Workspace Panel Grid -->
+    <main class="main-layout">
+
+        <!-- Left Side: Interactive Selection Location list -->
+        <div class="stores-tray">
+
+            <!-- Location Card 1 -->
+            <div class="store-card active" onclick="updateMapDisplay('Connaught Place Hub', 'Block E, Inner Circle, Connaught Place, New Delhi, Delhi 110001', '📞 +91 11 2345 6789')">
+                <h3>Connaught Place Hub</h3>
+                <p>Block E, Inner Circle, Connaught Place, New Delhi, Delhi 110001</p>
+                <div class="status-row">
+                    <span class="badge-open">Open Now</span>
+                    <span class="badge-hours">11:00 AM - 11:00 PM</span>
+                </div>
+            </div>
+
+            <!-- Location Card 2 -->
+            <div class="store-card" onclick="updateMapDisplay('Carter Road Seaside', 'Promenade Vista, Carter Road, Bandra West, Mumbai, Maharashtra 400050', '📞 +91 22 9876 5432')">
+                <h3>Carter Road Seaside</h3>
+                <p>Promenade Vista, Carter Road, Bandra West, Mumbai, Maharashtra 400050</p>
+                <div class="status-row">
+                    <span class="badge-open">Open Now</span>
+                    <span class="badge-hours">12:00 PM - 01:00 AM</span>
+                </div>
+            </div>
+
+            <!-- Location Card 3 -->
+            <div class="store-card" onclick="updateMapDisplay('Koramangala Avenue', '80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034', '📞 +91 80 5555 1234')">
+                <h3>Koramangala Avenue</h3>
+                <p>80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
+                <div class="status-row">
+                    <span class="badge-open">Open Now</span>
+                    <span class="badge-hours">11:00 AM - 12:00 AM</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Side: Safe Pure HTML/CSS Interactive Location Dashboard (Completely clear of broken tags) -->
+        <div class="map-canvas-wrapper" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #ffeef2 0%, #efeae4 100%); padding: 2rem; text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">📍</div>
+            <h2 id="displayTitle" style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--dark-chocolate);">Connaught Place Hub</h2>
+            <p id="displayAddress" style="color: var(--soft-text); margin-bottom: 1.5rem; font-weight: 500; max-width: 400px; line-height: 1.5;">Block E, Inner Circle, Connaught Place, New Delhi, Delhi 110001</p>
+            <p id="displayPhone" style="font-size: 1.1rem; font-weight: 700; color: var(--primary-pink); background-color: white; padding: 0.6rem 1.5rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">📞 +91 74796 03494</p>
+
+            <!-- Styled button opening the maps hub layout natively -->
+            <a href="https://google.com" id="mapExternalLink" target="_blank" style="margin-top: 2rem; text-decoration: none; background-color: var(--dark-chocolate); color: white; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem; transition: background-color 0.2s;">Open Directions in Google Maps ↗</a>
+        </div>
+
+    </main>
+
+    <!-- UI State Frame Manager Engine Script -->
+    <script>
+        function updateMapDisplay(title, address, phone) {
+            // Update the text fields smoothly inside the container card layout
+            document.getElementById('displayTitle').innerText = title;
+            document.getElementById('displayAddress').innerText = address;
+            document.getElementById('displayPhone').innerText = phone;
+
+            // Re-calculate the maps search query path parameter dynamically on execution click
+            document.getElementById('mapExternalLink').href = "https://google.com" + encodeURIComponent(title + " " + address);
+
+            // Manage active highlighted selection styling wrapper
+            let cards = document.querySelectorAll('.store-card');
+            cards.forEach(card => card.classList.remove('active'));
+
+            // Fallback to safely handle the user interaction event
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>

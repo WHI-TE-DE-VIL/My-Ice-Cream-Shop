@@ -1,0 +1,264 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+    <!-- 1. All your menu specific styling rules remain active inside the block -->
+    <style>
+        /* Modern Design System Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-pink: #ff7ea5;
+            --cream-white: #fffcf7;
+            --dark-chocolate: #4a2810;
+            --soft-text: #6b584c;
+            --mint-green: #a8e6cf;
+            --berry-purple: #dca3ff;
+            --honey-gold: #f3d17c;
+        }
+
+        body {
+            background-color: var(--cream-white);
+            color: var(--dark-chocolate);
+            padding-bottom: 5rem;
+        }
+
+        /* 1. Header Section */
+        .menu-header {
+            text-align: center;
+            padding: 5rem 1rem 3rem 1rem;
+            background: radial-gradient(circle at top, #ffeef2 0%, var(--cream-white) 70%);
+        }
+
+        .menu-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-header h1 span {
+            color: var(--primary-pink);
+        }
+
+        .menu-header p {
+            color: var(--soft-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 2. Menu Navigation Categories */
+        .categories-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: white;
+            border: 2px solid #efeae4;
+            color: var(--dark-chocolate);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background-color: var(--primary-pink);
+            border-color: var(--primary-pink);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 126, 165, 0.2);
+        }
+
+        /* 3. Responsive Menu Grid Layout */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 8%;
+        }
+
+        /* 4. Ice Cream Product Card Styling */
+        .menu-item-card {
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(74, 40, 16, 0.04);
+            border: 1px solid #fcfbf7;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(74, 40, 16, 0.08);
+        }
+
+        .item-visual-box {
+            height: 200px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            position: relative;
+        }
+
+        .visual-mint { background-color: var(--mint-green); }
+        .visual-pink { background-color: var(--primary-pink); }
+        .visual-choco { background-color: var(--dark-chocolate); }
+        .visual-berry { background-color: var(--berry-purple); }
+        .visual-honey { background-color: var(--honey-gold); }
+
+        .tag-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--dark-chocolate);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .item-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .item-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-title-row h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .item-price {
+            color: var(--primary-pink);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .item-details p {
+            color: var(--soft-text);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--dark-chocolate);
+            background-color: transparent;
+            color: var(--dark-chocolate);
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background-color: var(--dark-chocolate);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .menu-header h1 { font-size: 2.4rem; }
+            .menu-grid { padding: 0 5%; }
+        }
+    </style>
+
+    <!-- 2. Main Header Introduction Section -->
+    <header class="menu-header">
+        <h1>Our Artisan <span>Menu</span></h1>
+        <p>Explore our delicious range of handcrafted frozen treats made with 100% organic cream and fresh local ingredients.</p>
+    </header>
+
+    <!-- 3. Menu Category Interactive Filtering Bar -->
+    <div class="categories-container">
+        <button class="category-btn active">All Scoops</button>
+        <button class="category-btn">Classic Flavours</button>
+        <button class="category-btn">Signature Creations</button>
+        <button class="category-btn">Vegan Options</button>
+        <button class="category-btn">Waffles & Sundaes</button>
+    </div>
+
+    <!-- 4. Product Showcase Grid Setup -->
+    <main class="menu-grid">
+
+        <!-- Card Item 1 -->
+        <div class="menu-item-card">
+            <div class="item-visual-box visual-mint">
+                <span>🍃</span>
+                <span class="tag-badge">Best Seller</span>
+            </div>
+            <div class="item-details">
+                <div class="item-title-row">
+                    <h3>Mint Choco Fresh</h3>
+                    <span class="item-price">₹180</span>
+                </div>
+                <p>Cool organic peppermint base infolded with crunchy organic dark chocolate flakes.</p>
+                <button class="btn-add">Add to Order</button>
+            </div>
+        </div>
+
+        <!-- Card Item 2 -->
+        <div class="menu-item-card">
+            <div class="item-visual-box visual-pink">
+                <span>🍓</span>
+                <span class="tag-badge">Fresh Fruit</span>
+            </div>
+            <div class="item-details">
+                <div class="item-title-row">
+                    <h3>Strawberry Fields</h3>
+                    <span class="item-price">₹160</span>
+                </div>
+                <p>Creamy sweet profile packed with chunks of handpicked fresh garden strawberries.</p>
+                <button class="btn-add">Add to Order</button>
+            </div>
+        </div>
+
+        <!-- Card Item 3 -->
+        <div class="menu-item-card">
+            <div class="item-visual-box visual-choco">
+                <span>🍫</span>
+                <span class="tag-badge">Rich</span>
+            </div>
+            <div class="item-details">
+                <div class="item-title-row">
+                    <h3>Dark Cocoa Fudge</h3>
+                    <span class="item-price">₹190</span>
+                </div>
+                <p>Deep Belgian dark chocolate ice cream swirled with thick premium fudge ribbon loops.</p>
+                <button class="btn-add">Add to Order</button>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

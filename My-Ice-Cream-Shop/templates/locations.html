@@ -1,0 +1,138 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Our Outlets | Scoops & Dreams{% endblock %}
+
+{% block content %}
+    <style>
+        .locations-hero {
+            text-align: center;
+            /* Added a top margin and increased padding to clear the navbar space */
+            margin-top: 60px; 
+            padding: 6rem 1rem 3rem 1rem;
+            background: radial-gradient(circle at top, #ffeef2 0%, var(--cream-white) 70%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .locations-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+        }
+
+        .locations-hero h1 span {
+            color: var(--primary-pink);
+        }
+
+        .locations-hero p {
+            color: var(--soft-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 8% 5rem 8%;
+        }
+
+        .location-grid-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(74, 40, 16, 0.04);
+            border: 1px solid #fcfbf7;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .location-grid-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .location-icon-marker {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .location-grid-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+        }
+
+        .location-grid-card .address-text {
+            color: var(--soft-text);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .location-meta-row {
+            border-top: 2px dashed #efeae4;
+            padding-top: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .meta-timing {
+            color: var(--soft-text);
+        }
+
+        .meta-status {
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+        }
+    </style>
+
+    <header class="locations-hero">
+        <h1>All Our <span>Outlets</span></h1>
+        <p>Browse through our directory of premium ice cream parlors across the country.</p>
+    </header>
+
+    <main class="locations-grid">
+        <div class="location-grid-card">
+            <div class="location-icon-marker">🏪</div>
+            <h3>Connaught Place Hub</h3>
+            <p class="address-text">Block E, Inner Circle, Connaught Place, New Delhi, Delhi 110001</p>
+            <div class="location-meta-row">
+                <span class="meta-timing">11 AM - 11 PM</span>
+                <span class="meta-status">Open Now</span>
+            </div>
+        </div>
+
+        <div class="location-grid-card">
+            <div class="location-icon-marker">🏖️</div>
+            <h3>Carter Road Seaside</h3>
+            <p class="address-text">Promenade Vista, Carter Road, Bandra West, Mumbai, Maharashtra 400050</p>
+            <div class="location-meta-row">
+                <span class="meta-timing">12 PM - 1 AM</span>
+                <span class="meta-status">Open Now</span>
+            </div>
+        </div>
+
+        <div class="location-grid-card">
+            <div class="location-icon-marker">🌳</div>
+            <h3>Koramangala Avenue</h3>
+            <p class="address-text">80 Feet Road, 4th Block, Koramangala, Bengaluru, Karnataka 560034</p>
+            <div class="location-meta-row">
+                <span class="meta-timing">11 AM - 12 AM</span>
+                <span class="meta-status">Open Now</span>
+            </div>
+        </div>
+    </main>
+{% endblock %}

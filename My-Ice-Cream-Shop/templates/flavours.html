@@ -1,0 +1,199 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Artisan Flavours | Scoops & Dreams{% endblock %}
+
+{% block content %}
+    <style>
+        .flavours-hero {
+            text-align: center;
+            padding: 5rem 1rem 3rem 1rem;
+            background: radial-gradient(circle at top, #ffeef2 0%, var(--cream-white) 70%);
+        }
+
+        .flavours-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+        }
+
+        .flavours-hero h1 span {
+            color: var(--primary-pink);
+        }
+
+        .flavours-hero p {
+            color: var(--soft-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .flavours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 8% 5rem 8%;
+        }
+
+        .flavour-card {
+            background-color: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(74, 40, 16, 0.04);
+            border: 1px solid #fcfbf7;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .flavour-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(74, 40, 16, 0.08);
+        }
+
+        .graphic-display {
+            height: 180px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .palette-vanilla { background-color: #fff9e6; }
+        .palette-mango { background-color: #ffdf7e; }
+        .palette-pistachio { background-color: #d1f2d6; }
+        .palette-coffee { background-color: #e2cbb4; }
+
+        .allergen-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--dark-chocolate);
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flavour-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .flavour-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--dark-chocolate);
+        }
+
+        .flavour-info p {
+            color: var(--soft-text);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .profile-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            background-color: #efeae4;
+            color: var(--soft-text);
+        }
+
+        @media (max-width: 768px) {
+            .flavours-hero h1 { font-size: 2.4rem; }
+            .flavours-grid { padding: 0 5% 4rem 5%; }
+        }
+    </style>
+
+    <header class="flavours-hero">
+        <h1>Artisan <span>Flavours</span></h1>
+        <p>Take a closer look at the unique flavor logs and premium ingredients behind our classic ice cream varieties.</p>
+    </header>
+
+    <main class="flavours-grid">
+        <div class="flavour-card">
+            <div class="graphic-display palette-vanilla">
+                <span>🍦</span>
+                <span class="allergen-badge">Dairy Free Avail.</span>
+            </div>
+            <div class="flavour-info">
+                <h3>Classic Vanilla Bean</h3>
+                <p>Pure Madagascar vanilla pods infused slowly over 24 hours into rich, creamy farm-fresh whole milk.</p>
+                <div class="profile-row">
+                    <span class="profile-tag">Sweet</span>
+                    <span class="profile-tag">Aromatic</span>
+                    <span class="profile-tag">Classic</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flavour-card">
+            <div class="graphic-display palette-mango">
+                <span>🥭</span>
+                <span class="allergen-badge">100% Vegan</span>
+            </div>
+            <div class="flavour-info">
+                <h3>Alphonso Mango Rush</h3>
+                <p>A vibrant, velvety smooth sorbet crafted completely using the sweet nectar of real handpicked Alphonso mangoes.</p>
+                <div class="profile-row">
+                    <span class="profile-tag">Fruity</span>
+                    <span class="profile-tag">Tangy</span>
+                    <span class="profile-tag">Refreshing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flavour-card">
+            <div class="graphic-display palette-pistachio">
+                <span>🟢</span>
+                <span class="allergen-badge">Contains Nuts</span>
+            </div>
+            <div class="flavour-info">
+                <h3>Roasted Pistachio</h3>
+                <p>Rich Sicilian pistachio paste blended delicately with slow-roasted, crunchy pistachio nut fragments.</p>
+                <div class="profile-row">
+                    <span class="profile-tag">Nutty</span>
+                    <span class="profile-tag">Savoury-Sweet</span>
+                    <span class="profile-tag">Premium</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flavour-card">
+            <div class="graphic-display palette-coffee">
+                <span>☕</span>
+                <span class="allergen-badge">Contains Caffeine</span>
+            </div>
+            <div class="flavour-info">
+                <h3>Espresso Almond Swirl</h3>
+                <p>Robust freshly brewed dark espresso coffee base mixed with roasted almond bits and sweet caramel streams.</p>
+                <div class="profile-row">
+                    <span class="profile-tag">Bold</span>
+                    <span class="profile-tag">Rich</span>
+                    <span class="profile-tag">Energetic</span>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

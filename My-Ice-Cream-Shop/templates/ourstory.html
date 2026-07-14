@@ -1,0 +1,212 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Our Story | Scoops & Dreams{% endblock %}
+
+{% block content %}
+    <!-- Our Story View Layout Specific Custom CSS Styles -->
+    <style>
+        .story-hero {
+            text-align: center;
+            padding: 5rem 1rem 4rem 1rem;
+            background: radial-gradient(circle at top, #ffeef2 0%, var(--cream-white) 70%);
+        }
+
+        .story-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+        }
+
+        .story-hero h1 span {
+            color: var(--primary-pink);
+        }
+
+        .story-hero p {
+            color: var(--soft-text);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Vertical History Timeline Grid */
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 5rem 2rem;
+            position: relative;
+        }
+
+        /* Main center timeline structural axis bar line */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #efeae4;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 10px;
+        }
+
+        /* Timeline Milestone Node Blocks Row */
+        .timeline-row {
+            padding: 2rem 0;
+            position: relative;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Alternating left/right spacing splits */
+        .timeline-row.left {
+            left: 0;
+            padding-right: 3rem;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .timeline-row.right {
+            left: 50%;
+            padding-left: 3rem;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        /* Center circle checkpoint bullet indicators */
+        .timeline-row::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: white;
+            border: 4px solid var(--primary-pink);
+            top: calc(2rem + 10px);
+            border-radius: 50%;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-row.right::after {
+            left: -10px;
+        }
+
+        .timeline-row:hover::after {
+            background-color: var(--primary-pink);
+            transform: scale(1.2);
+        }
+
+        /* Milestone Display Content Cards Box */
+        .timeline-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(74, 40, 16, 0.03);
+            border: 1px solid #fcfbf7;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .milestone-year {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-pink);
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .timeline-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+        }
+
+        .timeline-card p {
+            font-size: 0.88rem;
+            color: var(--soft-text);
+            line-height: 1.6;
+        }
+
+        /* Responsive Mobile Layout Adaptations rules */
+        @media (max-width: 768px) {
+            .timeline-container::after {
+                left: 31px;
+            }
+            .timeline-row {
+                width: 100%;
+                padding-left: 4rem !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+                align-items: flex-start !important;
+            }
+            .timeline-row.left {
+                left: 0;
+            }
+            .timeline-row.right {
+                left: 0;
+            }
+            .timeline-row::after {
+                left: 21px !important;
+                right: auto !important;
+            }
+            .timeline-card {
+                max-width: 100%;
+            }
+            .story-hero h1 { font-size: 2.4rem; }
+        }
+    </style>
+
+    <!-- Visual Story Header Introduction block -->
+    <header class="story-hero">
+        <h1>Our Sweet <span>Journey</span></h1>
+        <p>How a simple passion for crafting fresh organic treats turned into a dream shared across generations.</p>
+    </header>
+
+    <!-- History Milestone Track Content Wrapper -->
+    <main class="timeline-container">
+
+        <!-- History Milestone Row item 1 -->
+        <div class="timeline-row left">
+            <div class="timeline-card">
+                <span class="milestone-year">2018</span>
+                <h3>The First Churn</h3>
+                <p>Starting out of a cozy garage workshop with just a single vintage hand-crank machine, crafting 5 classic flavor varieties for local neighborhood farm gatherings.</p>
+            </div>
+        </div>
+
+        <!-- History Milestone Row item 2 -->
+        <div class="timeline-row right">
+            <div class="timeline-card">
+                <span class="milestone-year">2021</span>
+                <h3>Going Organic</h3>
+                <p>We built permanent partnerships with local sustainable fruit orchards and organic dairy meadows, completely eliminating artificial sweeteners from our entire recipe lineup.</p>
+            </div>
+        </div>
+
+        <!-- History Milestone Row item 3 -->
+        <div class="timeline-row left">
+            <div class="timeline-card">
+                <span class="milestone-year">2024</span>
+                <h3>Opening Scoops Hub</h3>
+                <p>Launched our primary boutique ice cream parlor flagship store, creating an experiential sweet getaway featuring our iconic floating 3-scoop visual cone arrangements.</p>
+            </div>
+        </div>
+
+        <!-- History Milestone Row item 4 -->
+        <div class="timeline-row right">
+            <div class="timeline-card">
+                <span class="milestone-year">2026</span>
+                <h3>Digital Dreams Club</h3>
+                <p>Expanding our community network online with automated custom order tracking options and rewarding rewards tracking tiers built natively for ice cream lovers everywhere.</p>
+            </div>
+        </div>
+
+    </main>
+{% endblock %}

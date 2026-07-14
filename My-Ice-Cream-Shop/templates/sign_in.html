@@ -1,0 +1,249 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Sign In | Scoops & Dreams{% endblock %}
+
+{% block extra_css %}
+    <style>
+        /* Pure CSS Pastel Background Blobs */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background-color: #ffeef2;
+            top: 50px;
+            left: -50px;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background-color: #a8e6cf;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        /* Centered Workspace Container under Sticky Nav */
+        .login-page-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 3rem 1.5rem;
+            position: relative;
+        }
+
+        /* Glassmorphism Card Layout */
+        .login-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(74, 40, 16, 0.08);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo {
+            font-size: 2.2rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark-chocolate);
+        }
+
+        .brand-header p {
+            font-size: 0.9rem;
+            color: var(--soft-text);
+            margin-top: 0.25rem;
+        }
+
+        /* Django Message Box Container Setup */
+        .alert-box {
+            background-color: var(--error-red);
+            color: var(--error-text);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f5c6cb;
+            font-size: 0.85rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-chocolate);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border: 2px solid #efeae4;
+            background-color: var(--input-bg);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--dark-chocolate);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 4px rgba(255, 126, 165, 0.15);
+        }
+
+        /* Action Layer Utilities */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+        }
+
+        .remember-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--soft-text);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .remember-checkbox input {
+            accent-color: var(--primary-pink);
+            width: 16px;
+            height: 16px;
+        }
+
+        .forgot-link {
+            color: var(--primary-pink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Premium Sign In Button */
+        .btn-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 126, 165, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #ff6090;
+            transform: translateY(-1px);
+            box-shadow: 0 7px 20px rgba(255, 126, 165, 0.4);
+        }
+
+        /* Card Redirect Footer Links */
+        .card-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--soft-text);
+        }
+
+        .card-footer a {
+            color: var(--primary-pink);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="login-page-container">
+        <!-- Soft Ambient Vector Art Blobs -->
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+
+        <div class="login-card">
+            <div class="brand-header">
+                <!-- Linked logo to home page route -->
+                <a href="{% url 'home_page' %}" class="brand-logo">🍦</a>
+                <h2>Welcome Back!</h2>
+                <p>Grab a spoon and log in to your account</p>
+            </div>
+
+            <!-- Django Authentication Error Block -->
+            {% if messages %}
+                <div class="alert-box">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Secure Form Structure -->
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" placeholder="sweet_tooth" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••••••" required autocomplete="current-password">
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-checkbox">
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+
+            <div class="card-footer">
+                <!-- Linked dynamically to sign up template route -->
+                <p>New to Scoops? <a href="{% url 'sign_up' %}">Create an account</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
